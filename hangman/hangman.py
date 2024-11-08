@@ -1,12 +1,14 @@
 import requests
+import random
 import configparser
+from random_words import RandomWords
+rw = RandomWords()
+
 
 config = configparser.ConfigParser()
 config.read('config.ini')  # Read the configuration file
-
 api_key = config['API']['key']  # Access the key from the 'API' section
 
-print(api_key)
 
 def starting_point():
     fail_count = 0
@@ -35,15 +37,37 @@ def get_word():
     if difficulty == False:
         print("I'm sorry you made five mistakes already.Please come back again once you are ready. Bye! ")
     elif difficulty == "easy":
-        api_url = 'https://api.api-ninjas.com/v1/randomword'
-        
+        word_count = random.randint(4,6) 
+        while True:
+            word = rw.random_word()
+            if len(word) == word_count:
+                print(word)
+                return word
+    elif difficulty == "medium":
+        word_count = random.randint(7,9) 
+        while True:
+            word = rw.random_word()
+            if len(word) == word_count:
+                print(word)
+                return word
+    elif difficulty == "hard":
+        word_count = random.randint(10,15) 
+        while True:
+            word = rw.random_word()
+            if len(word) == word_count:
+                print(word)
+                return word
+    
 
-        
+def set_bars():
+    word = get_word() 
+    for line in word:
+        print("_", end=" ")
     
 
    
 def main():
-    starting_point()
+   set_bars()
 
         
     
