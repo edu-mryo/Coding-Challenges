@@ -1,19 +1,10 @@
-import requests
 import random
-import configparser
 from random_words import RandomWords
 rw = RandomWords()
 
 
-config = configparser.ConfigParser()
-config.read('config.ini')  # Read the configuration file
-api_key = config['API']['key']  # Access the key from the 'API' section
-
-
 def starting_point():
     fail_count = 0
-    print("Hello, world!")
-
     while True:
         if(fail_count == 5):
             return False
@@ -61,13 +52,49 @@ def get_word():
 
 def set_bars():
     word = get_word() 
+    word_list = list(word)
+    under_bar = []
     for line in word:
-        print("_", end=" ")
+        # print(word_list)   
+        # print("_", end=" ")
+        # under_bar = under_bar.append("_")
+        under_bar.append("_")
+    # print(word_list)
+    # print(under_bar)
+    return word_list, under_bar
     
+def guess():
+    lives = 6
+    answer_list,under_bar = set_bars()
+    answer_length = len(answer_list)
+    while lives > 0 and "_" in under_bar:
+        letter_found = False
+        guess = input("Guess a letter: ").lower()
+            # print(guess)
+        for i in range(len(answer_list)):
+            if guess == answer_list[i]:
+                under_bar[i] = guess
+                answer_length -= 1
+                letter_found = True
+                
+        if not letter_found:
+            print("Sorry, {guess} is not in the word".format(guess=guess))
+            lives -= 1
+                # print(under_bar, answer_length)
+        
+        for i in under_bar:
+            print(i, end=" ")
+        print("\nLives remaining:", lives)  # Print lives after each guess
 
-   
+    # else:
+    #     print("Sorry, {guess} is not in the word".format(guess=guess))
+        # for i in under_bar:
+        #     print(i, end=" ")
+    
+        # print(under_bar)
+
 def main():
-   set_bars()
+   guess()
 
         
     
