@@ -61,11 +61,11 @@ def set_bars():
         under_bar.append("_")
     # print(word_list)
     # print(under_bar)
-    return word_list, under_bar
+    return word_list, under_bar,word
     
 def guess():
     lives = 6
-    answer_list,under_bar = set_bars()
+    answer_list,under_bar,answer_word = set_bars()
     answer_length = len(answer_list)
     while lives > 0 and "_" in under_bar:
         letter_found = False
@@ -85,13 +85,10 @@ def guess():
         for i in under_bar:
             print(i, end=" ")
         print("\nLives remaining:", lives)  # Print lives after each guess
+    if lives == 0:
+        print("You lose! The word was: ", answer_word)
 
-    # else:
-    #     print("Sorry, {guess} is not in the word".format(guess=guess))
-        # for i in under_bar:
-        #     print(i, end=" ")
-    
-        # print(under_bar)
+  
 
 def main():
    guess()
